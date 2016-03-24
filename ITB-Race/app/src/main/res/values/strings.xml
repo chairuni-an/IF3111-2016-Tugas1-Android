@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ITB Race</string>
     <string name="title_activity_maps">Map</string>
+    <string name="main_prompt">Your SID:</string>
     <string name="spinner_title">Location Name:</string>
+    <string name="button_start">START</string>
     <string name="button_submit">SUBMIT</string>
 </resources>

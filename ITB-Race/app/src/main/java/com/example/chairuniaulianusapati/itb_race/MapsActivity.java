@@ -1,7 +1,11 @@
 package com.example.chairuniaulianusapati.itb_race;
 
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,7 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -38,9 +42,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Add a marker in Destination and move the camera and zoom
+        LatLng destination = new LatLng(-6.8915, 107.6107);
+        mMap.addMarker(new MarkerOptions().position(destination).title("Marker in Destination"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(destination));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destination, 16.0f));
+    }
+
+    /** Called when the user clicks the Submit Answer button */
+    public void submitAnswer(View view) {
+        Intent intent = new Intent(this, SubmitAnswerActivity.class);
+        startActivity(intent);
     }
 }

@@ -179,6 +179,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+                galleryAddPic();
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 //...
@@ -190,6 +191,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
+
+
     }
 
     String mCurrentPhotoPath;
@@ -205,10 +208,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        galleryAddPic(); //hapus kalo fail yah
+        //galleryAddPic(); //hapus kalo fail yah
         return image;
     }
 

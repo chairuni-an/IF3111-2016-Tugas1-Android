@@ -23,18 +23,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 response.setText("");
-                Client myClient = new Client("167.205.34.132", 3111, response);
+                Client myClient = new Client("167.205.34.132", 3111, response, getApplicationContext());
                 myClient.execute();
             }
         });
     }
 
     /** Called when the user clicks the Start button */
-    public void requestLocation(View view) {
+    /*public void requestLocation(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         //EditText editText = (EditText) findViewById(R.id.edit_message);
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
-    }
+    }*/
 }

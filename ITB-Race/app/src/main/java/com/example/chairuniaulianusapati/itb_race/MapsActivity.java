@@ -1,5 +1,6 @@
 package com.example.chairuniaulianusapati.itb_race;
 
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,7 +12,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
@@ -78,6 +82,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // get the angle around the z-axis rotated
         float degree = Math.round(event.values[0]);
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int orientation = display.getRotation();
+        if (orientation == 1) {
+            /* The device is rotated to the left. */
+            degree += 90;
+            Log.v("Left", "Rotated Left");
+        } else if (orientation == 3) {
+            /* The device is rotated to the right. */
+            degree -= 90;
+            Log.v("Right", "Rotated Right");
+        } else {
+
+        }
 
         //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 

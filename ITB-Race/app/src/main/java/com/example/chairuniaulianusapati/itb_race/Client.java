@@ -4,6 +4,8 @@ package com.example.chairuniaulianusapati.itb_race;
  * Created by chairuniaulianusapati on 3/25/16.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -28,11 +30,13 @@ public class Client extends AsyncTask<Void, Void, Void> {
     int dstPort;
     String response = "";
     TextView textResponse;
+    Context context;
 
-    Client(String addr, int port, TextView textResponse) {
+    Client(String addr, int port, TextView textResponse, Context context) {
         dstAddress = addr;
         dstPort = port;
         this.textResponse = textResponse;
+        this.context = context.getApplicationContext();
     }
 
     @Override
@@ -86,6 +90,9 @@ public class Client extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         textResponse.setText(response);
         super.onPostExecute(result);
+        Intent intent = new Intent(context, MapsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

@@ -16,10 +16,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //dari sini
         buttonStart = (Button) findViewById(R.id.startButton);
         response = (TextView) findViewById(R.id.responseTextView);
-
         buttonStart.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -27,11 +25,8 @@ public class MainActivity extends AppCompatActivity {
                 response.setText("");
                 Client myClient = new Client("167.205.34.132", 3111, response);
                 myClient.execute();
-
             }
         });
-
-        //sampai sini
     }
 
     /** Called when the user clicks the Start button */

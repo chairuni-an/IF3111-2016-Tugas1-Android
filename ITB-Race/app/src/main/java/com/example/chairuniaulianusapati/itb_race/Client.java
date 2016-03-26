@@ -37,20 +37,19 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... arg0) {
-
         Socket socket = null;
-
+        PrintWriter out;
+        BufferedReader in;
         try {
             JSONObject json = new JSONObject();
             json.put("com", "req_loc");
             json.put("nim", "13513054");
-
             socket = new Socket(dstAddress, dstPort);
             Log.i("Client", "Connecting...");
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
             out.println(json.toString());
             Log.i("Client", "Request Message: " + json.toString());
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             int c;
             String responseString = "";
             while((c=in.read())!=-1){
@@ -60,7 +59,6 @@ public class Client extends AsyncTask<Void, Void, Void> {
          /*
           * notice: inputStream.read() will block if no data return
           */
-
         }catch(org.json.JSONException e){
             // nothing
         } catch (UnknownHostException e) {

@@ -44,6 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float currentDegree = 0f;
     private SensorManager mSensorManager;
     JSONObject json;
+    LatLng destination = new LatLng(-6.8915, 107.6107); //itb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Bundle bundle = getIntent().getExtras();
         try {
             json = new JSONObject(bundle.getString("response"));
+            if(json.getString("status").equals("wrong_answer")){
+                String latitude = bundle.getString("latitude");
+                String longitude = bundle.getString("longitude");
+                destination = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            }
+
         }catch (JSONException e){}
 
         Context context = getApplicationContext();
@@ -147,7 +154,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Destination and move the camera and zoom
-        LatLng destination = new LatLng(-6.8915, 107.6107);
         try{
             destination = new LatLng(json.getDouble("latitude"), json.getDouble("longitude"));
         }catch(JSONException e){}

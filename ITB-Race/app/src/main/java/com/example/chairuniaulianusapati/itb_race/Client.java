@@ -34,6 +34,8 @@ public class Client extends AsyncTask<Void, Void, Void> {
     String responseString = "";
     JSONObject json;
     String command;
+    double latitude;
+    double longitude;
 
     Client(JSONObject json, String addr, int port, Context context) {
         dstAddress = addr;
@@ -42,6 +44,10 @@ public class Client extends AsyncTask<Void, Void, Void> {
         this.json = json;
         try {
             this.command = json.getString("com");
+            if(this.command.equals("answer")){
+                this.latitude = json.getDouble("latitude");
+                this.longitude = json.getDouble("longitude");
+            }
         }catch(org.json.JSONException e) {
             // nothing
         }
@@ -86,17 +92,11 @@ public class Client extends AsyncTask<Void, Void, Void> {
             }else{ //failed
                 Log.i("Client", "Request Failed!");
             }
-         /*
-          * notice: inputStream.read() will block if no data return
-          */
         }catch(org.json.JSONException e){
-            // nothing
         } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             response = "UnknownHostException: " + e.toString();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             response = "IOException: " + e.toString();
         } finally {
@@ -104,14 +104,12 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
         }
         return null;
     }
-
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
@@ -124,6 +122,8 @@ public class Client extends AsyncTask<Void, Void, Void> {
             Intent intent = new Intent(context, MapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("response", responseString);
+            intent.putExtra("latitude", Double.toHexString(latitude));
+            intent.putExtra("longitude", Double.toHexString(longitude));
             context.startActivity(intent);
         }else if (status.equals("finish")){ //finished
             Intent intent = new Intent(context, FinishActivity.class);

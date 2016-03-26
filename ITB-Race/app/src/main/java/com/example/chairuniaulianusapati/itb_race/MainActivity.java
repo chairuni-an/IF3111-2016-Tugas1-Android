@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 }catch(org.json.JSONException e){
                     // nothing
                 }
-                Client myClient = new Client(json, "167.205.34.132", 3111, response, getApplicationContext());
+                Client myClient = new Client(json, "167.205.34.132", 3111, getApplicationContext());
                 myClient.execute();
             }
         });

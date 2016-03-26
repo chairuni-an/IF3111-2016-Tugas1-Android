@@ -152,6 +152,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /** Called when the user clicks the Submit Answer button */
     public void answerButtonClicked(View view) {
         Intent intent = new Intent(this, SubmitAnswerActivity.class);
+        intent.putExtra("response", json.toString());
         startActivity(intent);
     }
 

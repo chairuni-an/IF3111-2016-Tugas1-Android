@@ -29,17 +29,15 @@ public class Client extends AsyncTask<Void, Void, Void> {
     String dstAddress;
     int dstPort;
     String response = "";
-    TextView textResponse;
     Context context;
     String status = "";
     String responseString = "";
     JSONObject json;
     String command;
 
-    Client(JSONObject json, String addr, int port, TextView textResponse, Context context) {
+    Client(JSONObject json, String addr, int port, Context context) {
         dstAddress = addr;
         dstPort = port;
-        this.textResponse = textResponse;
         this.context = context.getApplicationContext();
         this.json = json;
         try {
@@ -68,6 +66,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
             }
             json = new JSONObject(responseString);
             status = json.getString("status");
+
             if(status.equals("ok")){ //request location + correct answer
                 Log.i("Client", "Request Success!");
                 Log.i("Client", "Status: " + status);
@@ -115,7 +114,6 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        textResponse.setText(response);
         super.onPostExecute(result);
 
         if(status.equals("ok")){ //request location + correct answer

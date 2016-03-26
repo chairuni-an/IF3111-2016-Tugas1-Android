@@ -52,13 +52,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ImageButton button_camera = (ImageButton) findViewById(R.id.cameraButton);
-        button_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent();
-            }
-        });
         image = (ImageView) findViewById(R.id.imageViewCompass);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Bundle bundle = getIntent().getExtras();
@@ -171,54 +164,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
-    private void dispatchTakePictureIntent() {
+    public void cameraButtonClicked(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-                galleryAddPic();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                //...
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
+        boolean success = takePictureIntent.resolveActivity(getPackageManager()) != null;
+        Log.i("MapsActivity", "Camera Opened");
+        if (success){
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
         }
-
-
-    }
-
-    String mCurrentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        //galleryAddPic(); //hapus kalo fail yah
-        return image;
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
     }
 }

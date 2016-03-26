@@ -27,8 +27,9 @@ Skenario dari aplikasi yang dibangun sebagai berikut
 * Pengguna akan masuk ke halaman peta. Akan terdapat pin indikator lokasi tujuan dan kompas yang menghadap arah utara. Berikut tampilannya pada mode potrait.
 ![alt text](screenshot/Screenshot_2016-03-26-22-23-29.png)
 * Berikut tampilan pada mode landscape.
-* Pengguna dapat berjalan menuju lokasi. Ketika pengguna sampai, pengguna dapat menggunakan fitur foto-diri untuk foto dirinya di lokasi dengan klik tombol dengan ikon kamera. Berikut tampilan fitur foto-diri.
 ![alt text](screenshot/Screenshot_2016-03-26-22-23-48.png)
+* Pengguna dapat berjalan menuju lokasi. Ketika pengguna sampai, pengguna dapat menggunakan fitur foto-diri untuk foto dirinya di lokasi dengan klik tombol dengan ikon kamera. Berikut tampilan fitur foto-diri.
+![alt text](screenshot/Screenshot_2016-03-26-22-24-14.png)
 * Setelah foto diri, pengguna dapat mengirimkan jawaban lokasinya menggunakan fitur submit answer. Berikut tampilan fitur submit answer.
 ![alt text](screenshot/Screenshot_2016-03-26-22-24-30.png)
 * Pengguna dapat memilih salah satu pilihan jawaban dari drop down list yang ada, kemudian klik tombol submit untuk menjawab sebagai berikut.

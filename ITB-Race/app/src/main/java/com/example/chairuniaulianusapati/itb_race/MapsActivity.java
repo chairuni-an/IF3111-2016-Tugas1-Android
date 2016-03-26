@@ -28,6 +28,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,18 +42,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ImageView image;
     private float currentDegree = 0f;
     private SensorManager mSensorManager;
+    JSONObject json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         ImageButton button_camera = (ImageButton) findViewById(R.id.button_camera);
-
         button_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +59,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         image = (ImageView) findViewById(R.id.imageViewCompass);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Bundle bundle = getIntent().getExtras();
+        try {
+            json = new JSONObject(bundle.getString("response"));
+        }catch (JSONException e){}
     }
 
     @Override
@@ -95,8 +99,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
 
         }
-
-        //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
         // create a rotation animation (reverse turn degree degrees)
         RotateAnimation ra = new RotateAnimation(
@@ -139,6 +141,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Add a marker in Destination and move the camera and zoom
         LatLng destination = new LatLng(-6.8915, 107.6107);
+        try{
+            destination = new LatLng(json.getDouble("latitude"), json.getDouble("longitude"));
+        }catch(JSONException e){}
         mMap.addMarker(new MarkerOptions().position(destination).title("Marker in Destination"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(destination));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destination, 16.0f));

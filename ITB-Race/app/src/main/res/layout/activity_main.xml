@@ -17,6 +17,5 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:textSize="20dp"
-        android:onClick="requestLocation"
         android:text="@string/button_start" />
 </LinearLayout>

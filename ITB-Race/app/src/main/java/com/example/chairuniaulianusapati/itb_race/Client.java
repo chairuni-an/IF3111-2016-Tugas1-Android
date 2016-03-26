@@ -31,12 +31,22 @@ public class Client extends AsyncTask<Void, Void, Void> {
     String response = "";
     TextView textResponse;
     Context context;
+    String status = "";
+    String responseString = "";
+    JSONObject json;
+    String command;
 
-    Client(String addr, int port, TextView textResponse, Context context) {
+    Client(JSONObject json, String addr, int port, TextView textResponse, Context context) {
         dstAddress = addr;
         dstPort = port;
         this.textResponse = textResponse;
         this.context = context.getApplicationContext();
+        this.json = json;
+        try {
+            this.command = json.getString("com");
+        }catch(org.json.JSONException e) {
+            // nothing
+        }
     }
 
     @Override
@@ -45,21 +55,38 @@ public class Client extends AsyncTask<Void, Void, Void> {
         PrintWriter out;
         BufferedReader in;
         try {
-            JSONObject json = new JSONObject();
-            json.put("com", "req_loc");
-            json.put("nim", "13513054");
             socket = new Socket(dstAddress, dstPort);
             Log.i("Client", "Connecting...");
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
             out.println(json.toString());
-            Log.i("Client", "Request Message: " + json.toString());
+            Log.i("Client", "Request: " + json.toString());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             int c;
-            String responseString = "";
+            responseString = "";
             while((c=in.read())!=-1){
                 responseString+=(char)c;
             }
-            Log.i("Client", "Response: " + responseString);
+            json = new JSONObject(responseString);
+            status = json.getString("status");
+            if(status.equals("ok")){ //request location + correct answer
+                Log.i("Client", "Request Success!");
+                Log.i("Client", "Status: " + status);
+                Log.i("Client", "Response: " + responseString);
+            }else if (status.equals("wrong_answer")){ //wrong answer
+                Log.i("Client", "Request Success!");
+                Log.i("Client", "Status: " + status);
+                Log.i("Client", "Response: " + responseString);
+            }else if (status.equals("finish")){ //finished
+                Log.i("Client", "Request Success!");
+                Log.i("Client", "Status: " + status);
+                Log.i("Client", "Response: " + responseString);
+            }else if (status.equals("err")){ //error
+                Log.i("Client", "Request Success!");
+                Log.i("Client", "Status: " + status);
+                Log.i("Client", "Response: " + responseString);
+            }else{ //failed
+                Log.i("Client", "Request Failed!");
+            }
          /*
           * notice: inputStream.read() will block if no data return
           */
@@ -90,9 +117,27 @@ public class Client extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         textResponse.setText(response);
         super.onPostExecute(result);
-        Intent intent = new Intent(context, MapsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+
+        if(status.equals("ok")){ //request location + correct answer
+            Intent intent = new Intent(context, MapsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("response", responseString);
+            context.startActivity(intent);
+        }else if (status.equals("wrong_answer")){ //wrong answer
+            Intent intent = new Intent(context, SubmitAnswerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("response", responseString);
+            context.startActivity(intent);
+        }else if (status.equals("finish")){ //finished
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("response", responseString);
+            context.startActivity(intent);
+        }else if (status.equals("err")){ //error
+            //nothing
+        }else{ //failed
+            //nothing
+        }
     }
 
 }

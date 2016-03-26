@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView response;
@@ -23,18 +25,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 response.setText("");
-                Client myClient = new Client("167.205.34.132", 3111, response, getApplicationContext());
+                JSONObject json = new JSONObject();
+                try{
+                    json.put("com", "req_loc");
+                    json.put("nim", "13513054");
+                }catch(org.json.JSONException e){
+                    // nothing
+                }
+                Client myClient = new Client(json, "167.205.34.132", 3111, response, getApplicationContext());
                 myClient.execute();
             }
         });
     }
 
-    /** Called when the user clicks the Start button */
-    /*public void requestLocation(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        //EditText editText = (EditText) findViewById(R.id.edit_message);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }*/
 }

@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -63,6 +64,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             json = new JSONObject(bundle.getString("response"));
         }catch (JSONException e){}
+
+        Context context = getApplicationContext();
+        CharSequence text = "Response: " + json.toString();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override

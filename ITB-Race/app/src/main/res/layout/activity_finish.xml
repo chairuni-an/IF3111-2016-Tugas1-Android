@@ -4,12 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/startButton"
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        android:text="@string/button_start" />
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Congratulations!!!"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:id="@+id/textView" />
 </LinearLayout>

@@ -115,19 +115,18 @@ public class Client extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-
         if(status.equals("ok")){ //request location + correct answer
             Intent intent = new Intent(context, MapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("response", responseString);
             context.startActivity(intent);
         }else if (status.equals("wrong_answer")){ //wrong answer
-            Intent intent = new Intent(context, SubmitAnswerActivity.class);
+            Intent intent = new Intent(context, MapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("response", responseString);
             context.startActivity(intent);
         }else if (status.equals("finish")){ //finished
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, FinishActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("response", responseString);
             context.startActivity(intent);

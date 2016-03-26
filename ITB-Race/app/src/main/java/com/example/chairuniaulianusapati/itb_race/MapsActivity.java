@@ -50,7 +50,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ImageButton button_camera = (ImageButton) findViewById(R.id.button_camera);
+        ImageButton button_camera = (ImageButton) findViewById(R.id.cameraButton);
         button_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +150,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     /** Called when the user clicks the Submit Answer button */
-    public void submitAnswer(View view) {
+    public void answerButtonClicked(View view) {
         Intent intent = new Intent(this, SubmitAnswerActivity.class);
         startActivity(intent);
     }

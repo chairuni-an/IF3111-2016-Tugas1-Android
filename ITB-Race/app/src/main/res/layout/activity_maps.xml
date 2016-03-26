@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/button_camera"
+            android:id="@+id/cameraButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,11 +43,12 @@
             android:layout_gravity="bottom"
             />
         <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/answerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_send"
-            android:onClick="submitAnswer"
+            android:onClick="answerButtonClicked"
             android:layout_gravity="bottom"
             />
     </LinearLayout>

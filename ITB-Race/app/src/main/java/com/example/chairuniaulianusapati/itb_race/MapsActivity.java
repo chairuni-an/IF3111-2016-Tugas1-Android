@@ -1,14 +1,21 @@
 package com.example.chairuniaulianusapati.itb_race;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +44,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener, LocationListener {
 
     private GoogleMap mMap;
     private ImageView image;
@@ -45,6 +52,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SensorManager mSensorManager;
     JSONObject json;
     LatLng destination = new LatLng(-6.8915, 107.6107); //itb
+    double current_latitude;
+    double current_longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +67,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             json = new JSONObject(bundle.getString("response"));
             if(json.getString("status").equals("wrong_answer")){
-                String latitude = bundle.getString("latitude");
-                String longitude = bundle.getString("longitude");
-                destination = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                json.put("latitude", bundle.getString("latitude"));
+                json.put("longitude", bundle.getString("longitude"));
+            }
+            if(savedInstanceState != null){
+                current_latitude = savedInstanceState.getDouble("current_latitude");
+                current_longitude = savedInstanceState.getDouble("current_longitude");
             }
 
         }catch (JSONException e){}
@@ -145,8 +157,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, true);
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        if (location != null) {
+            onLocationChanged(location);
 
-        // Add a marker in Destination and move the camera and zoom
+        }
+        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
         try{
             destination = new LatLng(json.getDouble("latitude"), json.getDouble("longitude"));
         }catch(JSONException e){}
@@ -171,5 +194,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (success){
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        current_latitude = location.getLatitude();
+        current_longitude = location.getLongitude();
+        LatLng latLng = new LatLng(current_latitude,current_longitude);
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

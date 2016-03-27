@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -23,6 +24,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 
 public class Client extends AsyncTask<Void, Void, Void> {
 
@@ -72,25 +74,30 @@ public class Client extends AsyncTask<Void, Void, Void> {
             }
             json = new JSONObject(responseString);
             status = json.getString("status");
-
+            String current_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
             if(status.equals("ok")){ //request location + correct answer
                 Log.i("Client", "Request Success!");
                 Log.i("Client", "Status: " + status);
                 Log.i("Client", "Response: " + responseString);
+                Log.i("Client", "Time: " + current_time);
             }else if (status.equals("wrong_answer")){ //wrong answer
                 Log.i("Client", "Request Success!");
                 Log.i("Client", "Status: " + status);
                 Log.i("Client", "Response: " + responseString);
+                Log.i("Client", "Time: " + current_time);
             }else if (status.equals("finish")){ //finished
                 Log.i("Client", "Request Success!");
                 Log.i("Client", "Status: " + status);
                 Log.i("Client", "Response: " + responseString);
+                Log.i("Client", "Time: " + current_time);
             }else if (status.equals("err")){ //error
                 Log.i("Client", "Request Success!");
                 Log.i("Client", "Status: " + status);
                 Log.i("Client", "Response: " + responseString);
+                Log.i("Client", "Time: " + current_time);
             }else{ //failed
                 Log.i("Client", "Request Failed!");
+                Log.i("Client", "Time: " + current_time);
             }
         }catch(org.json.JSONException e){
         } catch (UnknownHostException e) {
@@ -122,8 +129,8 @@ public class Client extends AsyncTask<Void, Void, Void> {
             Intent intent = new Intent(context, MapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("response", responseString);
-            intent.putExtra("latitude", Double.toHexString(latitude));
-            intent.putExtra("longitude", Double.toHexString(longitude));
+            intent.putExtra("latitude", Double.toString(latitude));
+            intent.putExtra("longitude", Double.toString(longitude));
             context.startActivity(intent);
         }else if (status.equals("finish")){ //finished
             Intent intent = new Intent(context, FinishActivity.class);

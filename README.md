@@ -57,4 +57,4 @@ Skenario dari aplikasi yang dibangun sebagai berikut
 ## Lokasi Source Code dan Binary
 *[Source Code](ITB-Race)
 
-*[Binary](app-debug.apk)
+*[Binary](final.apk)

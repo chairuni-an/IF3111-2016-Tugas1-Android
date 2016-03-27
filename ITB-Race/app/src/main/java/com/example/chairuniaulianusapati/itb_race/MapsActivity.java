@@ -171,7 +171,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
         try{
-            destination = new LatLng(json.getDouble("latitude"), json.getDouble("longitude"));
+            destination = new LatLng(json.getDouble("longitude"), json.getDouble("latitude"));
         }catch(JSONException e){}
         mMap.addMarker(new MarkerOptions().position(destination).title("Marker in Destination"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(destination));

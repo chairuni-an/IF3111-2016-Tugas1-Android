@@ -55,5 +55,5 @@ Skenario dari aplikasi yang dibangun sebagai berikut
 
 
 ## Lokasi Source Code dan Binary
-Source Code: ITB-Race
-Binary: ITB-Race/app/build/outputs/apk/app-debug.apk
+[Source Code](ITB-Race)
+[Binary](ITB-Race/app/build/outputs/apk/app-debug.apk)

@@ -12,7 +12,7 @@ Daftar kemungkinan jawaban lokasi sudah ditentukan sebagai berikut.
 * cc_barat
 * cc_timur
 * dpr
-* sunken
+* oktagon
 * perpustakaan
 * pau
 * kubus

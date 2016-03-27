@@ -31,17 +31,6 @@ public class SubmitAnswerActivity extends AppCompatActivity {
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        /*categories.add("CC Barat"); //code: cc_barat
-        categories.add("CC Timur"); //code: cc_timur
-        categories.add("DPR"); //code: dpr
-        categories.add("GKU Barat"); //code: gku_barat
-        categories.add("GKU Timur"); //code: gku_timur
-        categories.add("Intel"); //code: intel
-        categories.add("Kubus"); //code: kubus
-        categories.add("PAU"); //code: pau
-        categories.add("Perpustakaan"); //code: perpustakaan
-        categories.add("Sunken"); //code: sunken*/
-
         categories.add("cc_barat"); //code: cc_barat
         categories.add("cc_timur"); //code: cc_timur
         categories.add("dpr"); //code: dpr
@@ -49,9 +38,9 @@ public class SubmitAnswerActivity extends AppCompatActivity {
         categories.add("gku_timur"); //code: gku_timur
         categories.add("intel"); //code: intel
         categories.add("kubus"); //code: kubus
+        categories.add("oktagon"); //code: oktagon
         categories.add("pau"); //code: pau
         categories.add("perpustakaan"); //code: perpustakaan
-        categories.add("sunken"); //code: sunken
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
